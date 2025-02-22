@@ -9,3 +9,9 @@
 通过Docker实现，将环境与主机的环境隔离开，方便迁移。通过Makefile管理容器，方便使用。
 
 ## 工具列表
+
+1. Latex
+
+## Hint
+
+bash都是用安装了oh-my-zsh的zsh,方便历史记录和自动补全。
