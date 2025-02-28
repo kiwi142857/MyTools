@@ -1,10 +1,5 @@
 FROM texlive/texlive:latest
 
-# 检查并创建源文件
-RUN echo "deb http://mirrors.aliyun.com/debian stable main contrib non-free" > /etc/apt/sources.list \
-    && echo "deb http://mirrors.aliyun.com/debian stable-updates main contrib non-free" >> /etc/apt/sources.list \
-    && echo "deb http://mirrors.aliyun.com/debian-security stable-security main contrib non-free" >> /etc/apt/sources.list
-
 # Start of Selection
 ENV HTTP_PROXY=http://host.docker.internal:7890
 ENV HTTPS_PROXY=http://host.docker.internal:7890
