@@ -68,9 +68,25 @@ make start SRC_DIR=/path/to/your/latex/files
 ## 常见问题
 
 1. 如果遇到权限问题，请检查挂载目录的权限设置
-2. 如果需要安装额外的包，可以在容器内使用 `apt-get install`
-3. 历史命令保存在容器的 `~/.zsh_history` 文件中
+2. 如果需要安装额外的包，可以在容器内使用 `sudo apt-get install`
+3. 默认用户为 stu，密码为 000
+4. 历史命令保存在容器的 `~/.zsh_history` 文件中
 
 ## 自定义配置
 
 如果需要自定义 zsh 配置，可以修改 Dockerfile 中的 .zshrc 配置部分。如果需要安装额外的工具，可以在 Dockerfile 的 apt-get install 部分添加包名。
+
+## Makedown渲染示例
+
+```bash
+pandoc 522031910299_陈启炜_作业01.md   -f markdown   --pdf-engine=xelatex   --mathjax   -V mainfont="FandolHei"   -V mathfont="Latin Modern Math"   -V geometry="margin=2.5cm"   -V fontsize=12pt   -V linestretch=1.3   -V colorlinks=true   -V linkcolor=NavyBlue   -V urlcolor=NavyBlue   -V header-includes="
+    \usepackage{xeCJK}
+    \XeTeXlinebreaklocale 'zh'
+    \XeTeXlinebreakskip = 0pt plus 1pt
+    \usepackage{graphicx}
+    \usepackage{float}
+    \renewcommand{\figurename}{图} % 设置图的标题为“图”
+    \usepackage{caption}
+    \captionsetup[figure]{labelformat=empty} % 设置图片标题格式
+  "   -V secnumdepth=0   --highlight-style=pygments   -o 522031910299_陈启炜_作业01.pdf
+```

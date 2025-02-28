@@ -15,6 +15,16 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# 创建用户
+RUN useradd -m -s /bin/zsh stu
+# 设置密码
+RUN echo "stu:000" | chpasswd
+# 加入 sudo 组
+RUN usermod -aG sudo stu
+
+# 切换到 stu 用户
+USER stu
+
 # 安装 oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
