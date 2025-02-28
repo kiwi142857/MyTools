@@ -5,6 +5,11 @@ RUN echo "deb http://mirrors.aliyun.com/debian stable main contrib non-free" > /
     && echo "deb http://mirrors.aliyun.com/debian stable-updates main contrib non-free" >> /etc/apt/sources.list \
     && echo "deb http://mirrors.aliyun.com/debian-security stable-security main contrib non-free" >> /etc/apt/sources.list
 
+# Start of Selection
+ENV HTTP_PROXY=http://host.docker.internal:7890
+ENV HTTPS_PROXY=http://host.docker.internal:7890
+
+# End of Selection
 # 安装额外需要的包
 RUN apt-get update && apt-get install -y \
     pandoc \

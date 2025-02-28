@@ -64,6 +64,7 @@ make start SRC_DIR=/path/to/your/latex/files
 1. 首次构建镜像可能需要一些时间，因为需要下载基础镜像和安装额外的包
 2. 容器会在后台持续运行，使用完毕后记得使用 `make stop` 停止容器
 3. 所有在 `/workspace` 目录下的更改都会同步到宿主机的对应目录
+4. 配置了代理，使用 `host.docker.internal` 访问宿主机，如需删除代理，可注释 `ENV HTTP_PROXY=http://host.docker.internal:7890` 和 `ENV HTTPS_PROXY=http://host.docker.internal:7890`在Dockerfile中
 
 ## 常见问题
 
