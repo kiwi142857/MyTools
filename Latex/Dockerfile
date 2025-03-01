@@ -1,21 +1,24 @@
 FROM texlive/texlive:latest
 
-# Start of Selection
+# 设置代理
 ENV HTTP_PROXY=http://host.docker.internal:7890
 ENV HTTPS_PROXY=http://host.docker.internal:7890
 
-# End of Selection
-# 安装额外需要的包
-RUN apt-get update && apt-get install -y \
-    pandoc \
-    python3 \
-    python3-pip \
-    zsh \
-    git \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# 创建 apt 目录结构和 sources.list 文件
+RUN mkdir -p /etc/apt && \
+    echo "deb http://mirrors.ustc.edu.cn/debian bullseye main contrib non-free" > /etc/apt/sources.list && \
+    echo "deb http://mirrors.ustc.edu.cn/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.ustc.edu.cn/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list
 
-# 创建用户
+# 确保不使用其他源
+RUN rm -f /etc/apt/sources.list.d/*
+
+# 安装额外需要的包，但不包括 Python 相关包
+RUN apt-get clean && apt-get update && apt-get install -y --fix-missing \
+    pandoc \
+    zsh git curl sudo && rm -rf /var/lib/apt/lists/*
+
+# 创建用户，并设置默认 shell 为 zsh
 RUN useradd -m -s /bin/zsh stu
 # 设置密码
 RUN echo "stu:000" | chpasswd
@@ -41,9 +44,6 @@ RUN echo 'export ZSH=$HOME/.oh-my-zsh' > ~/.zshrc \
     && echo 'HISTSIZE=10000' >> ~/.zshrc \
     && echo 'SAVEHIST=10000' >> ~/.zshrc \
     && echo 'HISTFILE=~/.zsh_history' >> ~/.zshrc
-
-# 设置 zsh 为默认 shell
-RUN chsh -s /bin/zsh
 
 # 设置工作目录
 WORKDIR /workspace
